@@ -1,4 +1,4 @@
-name: Push in main branch
+name: Main branch push
 
 on: 
   push:
@@ -61,7 +61,9 @@ jobs:
     runs-on: ubuntu-20.04
     needs: [build_docker_image]
     env:
-      IMAGE_NAME: twitter-scheduler
+      IMAGE_NAME: twitter-scheduler-tfm
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
@@ -76,11 +78,34 @@ jobs:
         run: |
           docker load --input /tmp/docker-image.tar
       - name: Login to DockerHub
-        run: docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}" 
+        run: docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_TOKEN" 
       - name: Push image to DockerHub
         run: |
           IMAGE_VERSION=$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout)
-          docker tag docker-image ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_VERSION
-          docker tag docker-image ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_VERSION
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
+          docker tag docker-image $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_VERSION
+          docker tag docker-image $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+          docker push $DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_VERSION
+          docker push $DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
+
+  build_and_deploy_in_heroku:
+    name: Publish and deploy in Heroku
+    runs-on: ubuntu-20.04
+    needs: [run_tests_build_app]
+    env:
+      IMAGE_NAME: twitter-scheduler-tfm
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Download jar from previous job
+        uses: actions/download-artifact@v2
+        with:
+          name: target
+          path: target
+      - name: Heroku Container Registry login
+        run: heroku container:login 
+      - name: Build and push
+        run: heroku container:push -a $HEROKU_APP_NAME web 
+      - name: Release
+        run: heroku container:release -a $HEROKU_APP_NAME web
