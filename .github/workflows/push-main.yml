@@ -81,4 +81,6 @@ jobs:
         run: |
           IMAGE_VERSION=$(mvn -q help:evaluate -Dexpression=project.version -DforceStdout)
           docker tag docker-image ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_VERSION
+          docker tag docker-image ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$IMAGE_VERSION
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:latest
