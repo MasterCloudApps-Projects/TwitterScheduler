@@ -32,6 +32,10 @@ jobs:
     name: Publish in DockerHub
     runs-on: ubuntu-20.04
     needs: [run_tests_build_app]
+    env:
+      IMAGE_NAME: twitter-scheduler-tfm
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
