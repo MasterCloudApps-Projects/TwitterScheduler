@@ -6,6 +6,8 @@ target/
 mvnw
 mvnw.cmd
 
+twitter4j.properties
+
 ### STS ###
 .apt_generated
 .classpath
