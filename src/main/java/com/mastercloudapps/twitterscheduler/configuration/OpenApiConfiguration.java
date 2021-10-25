@@ -8,7 +8,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 
 @Configuration
-public class OpenApiConfig {
+public class OpenApiConfiguration {
 
 	@Bean
 	public OpenAPI customOpenAPI() {
@@ -17,6 +17,6 @@ public class OpenApiConfig {
 				.components(new Components())
 				.info(new Info()
 						.title("Twitter Scheduler API")
-						.description("Twitter Scheduler TFM of URJC MasterCloudApps 2020"));
+						.description("Twitter Scheduler TFM of URJC MasterCloudApps 2020-2021"));
 	}
 }

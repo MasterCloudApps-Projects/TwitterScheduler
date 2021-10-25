@@ -11,6 +11,9 @@ jobs:
   run_tests_build_app:
     name: Run tests and build app
     runs-on: ubuntu-20.04
+    env:
+      OPENAPI_USER: ${{ secrets.OPENAPI_USER }}
+      OPENAPI_PASSWORD: ${{ secrets.OPENAPI_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
