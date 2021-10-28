@@ -19,7 +19,7 @@ public interface IndexApi {
 			tags = { "index" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation", 
-                content = @Content(array = @ArraySchema(schema = @Schema(implementation = String	.class)))),
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = String.class)))),
         @ApiResponse(responseCode = "404", description = "page not found") })
 	public ResponseEntity<String> getIndex();
 

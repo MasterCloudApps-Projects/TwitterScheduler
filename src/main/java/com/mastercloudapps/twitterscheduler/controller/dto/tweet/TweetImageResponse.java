@@ -1,0 +1,21 @@
+package com.mastercloudapps.twitterscheduler.controller.dto.tweet;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@Builder
+@Data
+@NoArgsConstructor
+public class TweetImageResponse {
+	
+	private Long tweetImageId;
+	private Long size;
+	private String type;
+	private Integer width;
+	private Integer height;
+	
+
+}
