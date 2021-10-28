@@ -2,7 +2,6 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import java.util.Collection;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mastercloudapps.twitterscheduler.controller.dto.tweet.TweetResponse;
