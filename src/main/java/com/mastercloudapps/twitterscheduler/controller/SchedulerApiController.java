@@ -23,20 +23,4 @@ public class SchedulerApiController implements SchedulerApi {
 				.build());
 	}
 
-	@PostMapping("/enable")
-	public ResponseEntity<SchedulerResponse> enable() {
-		
-		return ResponseEntity.ok(SchedulerResponse.builder()
-				.active(true)
-				.build());
-	}
-
-	@PostMapping("/disable")
-	public ResponseEntity<SchedulerResponse> disable() {
-		
-		return ResponseEntity.ok(SchedulerResponse.builder()
-				.active(false)
-				.build());
-	}
-
 }

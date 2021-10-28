@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<ff4j.version>1.8.11</ff4j.version>
 	</properties>
 
 	<dependencies>
@@ -64,6 +65,18 @@
 			<scope>provided</scope>
     	</dependency>
         
+        <!-- FF4J dependencies -->
+		<dependency>
+			<groupId>org.ff4j</groupId>
+			<artifactId>ff4j-spring-boot-starter</artifactId>
+			<version>${ff4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ff4j</groupId>
+			<artifactId>ff4j-web</artifactId>
+			<version>${ff4j.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

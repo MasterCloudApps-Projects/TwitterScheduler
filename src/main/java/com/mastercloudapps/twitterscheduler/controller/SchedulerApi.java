@@ -23,27 +23,6 @@ public interface SchedulerApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(array = @ArraySchema(schema = @Schema(implementation = SchedulerResponse.class)))),
         @ApiResponse(responseCode = "500", description = "internal server error") })
-	public ResponseEntity<SchedulerResponse> getStatus();
-	
-	@Operation(
-			summary = "Enable scheduler", 
-			description = "Enable scheduler", 
-			tags = { "scheduler" })
-    @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "scheduler enabled",
-                content = @Content(schema = @Schema(implementation = SchedulerResponse.class))),
-        @ApiResponse(responseCode = "500", description = "internal server error") })
-	public ResponseEntity<SchedulerResponse> enable();
-	
-	@Operation(
-			summary = "Disable scheduler", 
-			description = "Disable scheduler", 
-			tags = { "scheduler" })
-    @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "scheduler disabled",
-                content = @Content(schema = @Schema(implementation = SchedulerResponse.class))),
-        @ApiResponse(responseCode = "500", description = "internal server error") })
-	public ResponseEntity<SchedulerResponse> disable();
-	
+	public ResponseEntity<SchedulerResponse> getStatus();	
 	
 }
