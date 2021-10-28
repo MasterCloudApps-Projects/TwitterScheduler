@@ -26,7 +26,6 @@ public interface TweetApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(array = @ArraySchema(schema = @Schema(implementation = TweetResponse.class)))),
         @ApiResponse(responseCode = "500", description = "internal server error") })
-	//@GetMapping(value="")
 	public Collection<TweetResponse> getTweets();
 	
 	@Operation(
@@ -37,7 +36,6 @@ public interface TweetApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(schema = @Schema(implementation = TweetResponse.class))),
         @ApiResponse(responseCode = "404", description = "tweet not found") })
-	//@GetMapping(value="/{id}")	
 	public TweetResponse getTweetById(@PathVariable Long id);
 
 }

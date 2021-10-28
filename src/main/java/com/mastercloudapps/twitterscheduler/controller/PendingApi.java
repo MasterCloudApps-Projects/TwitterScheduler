@@ -2,10 +2,7 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import java.util.Collection;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mastercloudapps.twitterscheduler.controller.dto.pending.PendingTweetRequest;
@@ -30,7 +27,6 @@ public interface PendingApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(array = @ArraySchema(schema = @Schema(implementation = PendingTweetResponse.class)))),
         @ApiResponse(responseCode = "500", description = "internal server error") })
-	//@GetMapping(value="")
 	public Collection<PendingTweetResponse> getPendingTweets();
 	
 	@Operation(
@@ -41,7 +37,6 @@ public interface PendingApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
         @ApiResponse(responseCode = "404", description = "tweet not found") })
-	//@GetMapping(value="/{id}")	
 	public PendingTweetResponse getPendingTweetById(@PathVariable Long id);
 	
 	@Operation(
@@ -52,7 +47,6 @@ public interface PendingApi {
         @ApiResponse(responseCode = "201", description = "pending tweet successfully created",
                 content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
         @ApiResponse(responseCode = "500", description = "internal server error") })
-	//@PostMapping(value="")
 	public PendingTweetResponse postPendingTweet(@RequestBody PendingTweetRequest request);
 	
 	@Operation(
@@ -63,6 +57,5 @@ public interface PendingApi {
         @ApiResponse(responseCode = "200", description = "pending tweet successfully deleted",
         		content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
         @ApiResponse(responseCode = "404", description = "pending tweet not found") })
-	//@DeleteMapping(value="/{id}")
 	public PendingTweetResponse deletePendingTweet(@PathVariable Long id);
 }
