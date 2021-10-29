@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<togglz.version>2.9.0</togglz.version>
+		<togglz.version>3.0.0</togglz.version>
 	</properties>
 
 	<dependencies>
