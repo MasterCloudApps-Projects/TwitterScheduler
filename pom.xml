@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mastercloudapps</groupId>
 	<artifactId>twitter-scheduler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>twitter-scheduler</name>
 	<description>MasterCloudApps TFM project for scheduling tweets</description>
-	
+
 	<properties>
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,11 +22,11 @@
 	</properties>
 
 	<dependencies>
-		
+
 		<dependency>
-      		<groupId>org.springframework.boot</groupId>
-      		<artifactId>spring-boot-devtools</artifactId>
-    	</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -36,35 +37,40 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-actuator</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<dependency>
-		    <groupId>org.springdoc</groupId>
-		    <artifactId>springdoc-openapi-ui</artifactId>
-		    <version>1.5.12</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.5.12</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>2.4.4</version>
 		</dependency>
-		
+
 		<dependency>
-      		<groupId>org.projectlombok</groupId>
-      		<artifactId>lombok</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
-    	</dependency>
-        
+		</dependency>
+
 		<!-- togglz dependencies -->
 		<dependency>
 			<groupId>org.togglz</groupId>
@@ -81,6 +87,12 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -89,16 +101,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<executions>
-        			<execution>
-            			<goals>
-                			<goal>build-info</goal>
-            			</goals>
-        			</execution>
-    			</executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
-			    <groupId>pl.project13.maven</groupId>
-			    <artifactId>git-commit-id-plugin</artifactId>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
