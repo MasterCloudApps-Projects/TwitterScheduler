@@ -91,8 +91,8 @@ jobs:
       - name: Release
         run: heroku container:release -a $HEROKU_APP_NAME web
 
-  smoke_test:
-    name: Smoke test
+  smoke_tests:
+    name: Smoke tests
     runs-on: ubuntu-20.04
     needs: [build_and_deploy_in_heroku]
     env:
@@ -102,7 +102,15 @@ jobs:
     steps:
       - name: Wait app deployment
         run: sleep 10
-      - name: Check app
+      - name: Check app rest api available
         uses: wei/curl@v1
         with:
-          args: -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/info
+          args: -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/health
+      - name: Check app status is up
+        run: |
+          curl -sS https://webinstall.dev/jq | bash
+          APP_STATUS=$(curl -u $API_USERNAME:$API_PASSWORD -X GET https://$HEROKU_APP_NAME.herokuapp.com/actuator/health | jq '.status' | sed 's/"//g')
+          echo "APPLICATION STATUS = " $APP_STATUS
+          if [ "$APP_STATUS" != "UP" ]; then
+            exit 1
+          fi
