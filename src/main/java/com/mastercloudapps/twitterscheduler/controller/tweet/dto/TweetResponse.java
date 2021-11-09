@@ -1,8 +1,5 @@
 package com.mastercloudapps.twitterscheduler.controller.tweet.dto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TweetResponse {
 
-	private Long tweetId;
+	private Long id;
 	private String message;
-	private List<TweetImageResponse> images;
-	private LocalDateTime requestedPublicationDate;
-	private LocalDateTime publishedAt;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private String url;
+//	private List<TweetImageResponse> images;
+	private String requestedPublicationDate;
+	private String publishedAt;
+	private String createdAt;
 
 }

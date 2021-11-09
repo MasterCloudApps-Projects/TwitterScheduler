@@ -2,6 +2,7 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import java.util.Collection;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
@@ -35,6 +36,6 @@ public interface TweetApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(schema = @Schema(implementation = TweetResponse.class))),
         @ApiResponse(responseCode = "404", description = "tweet not found") })
-	public TweetResponse getTweetById(@PathVariable Long id);
+	public ResponseEntity<TweetResponse> getTweetById(@PathVariable Long id);
 
 }
