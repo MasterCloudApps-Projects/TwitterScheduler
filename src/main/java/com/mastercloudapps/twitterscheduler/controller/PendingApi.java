@@ -2,6 +2,7 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import java.util.Collection;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -37,7 +38,7 @@ public interface PendingApi {
         @ApiResponse(responseCode = "200", description = "successful operation", 
                 content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
         @ApiResponse(responseCode = "404", description = "tweet not found") })
-	public PendingTweetResponse getPendingTweetById(@PathVariable Long id);
+	public ResponseEntity<PendingTweetResponse> getPendingTweetById(@PathVariable Long id);
 	
 	@Operation(
 			summary = "Add a new pending tweet", 
@@ -47,15 +48,14 @@ public interface PendingApi {
         @ApiResponse(responseCode = "201", description = "pending tweet successfully created",
                 content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
         @ApiResponse(responseCode = "500", description = "internal server error") })
-	public PendingTweetResponse postPendingTweet(@RequestBody PendingTweetRequest request);
+	public PendingTweetResponse createPendingTweet(@RequestBody PendingTweetRequest request);
 	
 	@Operation(
 			summary = "Deletes a pending tweet and its images", 
 			description = "Deletes a pending tweet and its images", 
 			tags = { "pending" })
     @ApiResponses(value = { 
-        @ApiResponse(responseCode = "200", description = "pending tweet successfully deleted",
-        		content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
+        @ApiResponse(responseCode = "200", description = "pending tweet successfully deleted"),
         @ApiResponse(responseCode = "404", description = "pending tweet not found") })
-	public PendingTweetResponse deletePendingTweet(@PathVariable Long id);
+	public ResponseEntity<Void> deletePendingTweet(@PathVariable Long id);
 }
