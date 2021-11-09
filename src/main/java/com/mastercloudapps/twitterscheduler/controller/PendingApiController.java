@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mastercloudapps.twitterscheduler.controller.dto.pending.PendingImageResponse;
-import com.mastercloudapps.twitterscheduler.controller.dto.pending.PendingTweetRequest;
-import com.mastercloudapps.twitterscheduler.controller.dto.pending.PendingTweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingImageResponse;
+import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 

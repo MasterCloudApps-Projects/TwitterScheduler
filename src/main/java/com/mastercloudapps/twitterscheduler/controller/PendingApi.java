@@ -5,8 +5,8 @@ import java.util.Collection;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.mastercloudapps.twitterscheduler.controller.dto.pending.PendingTweetRequest;
-import com.mastercloudapps.twitterscheduler.controller.dto.pending.PendingTweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

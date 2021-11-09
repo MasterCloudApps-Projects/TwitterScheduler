@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.controller.dto.tweet;
+package com.mastercloudapps.twitterscheduler.controller.pending.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,13 +12,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @NoArgsConstructor
-public class TweetResponse {
+public class PendingTweetResponse {
 
-	private Long tweetId;
+	private Long pendingTweetId;
 	private String message;
-	private List<TweetImageResponse> images;
-	private LocalDateTime requestedPublicationDate;
-	private LocalDateTime publishedAt;
+	private List<PendingImageResponse> images;
+	private LocalDateTime publicationDate;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 

@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.mastercloudapps.twitterscheduler.controller.dto.tweet.TweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

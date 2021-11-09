@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.controller.dto.tweet;
+package com.mastercloudapps.twitterscheduler.controller.tweet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

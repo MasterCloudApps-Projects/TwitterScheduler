@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.controller.dto.pending;
+package com.mastercloudapps.twitterscheduler.controller.pending.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

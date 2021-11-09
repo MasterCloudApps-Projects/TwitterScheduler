@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mastercloudapps.twitterscheduler.controller.dto.tweet.TweetImageResponse;
-import com.mastercloudapps.twitterscheduler.controller.dto.tweet.TweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetImageResponse;
+import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 

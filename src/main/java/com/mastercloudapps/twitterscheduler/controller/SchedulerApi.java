@@ -2,7 +2,7 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import org.springframework.http.ResponseEntity;
 
-import com.mastercloudapps.twitterscheduler.controller.dto.scheduler.SchedulerResponse;
+import com.mastercloudapps.twitterscheduler.controller.scheduler.dto.SchedulerResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
