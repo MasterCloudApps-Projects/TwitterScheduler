@@ -1,7 +1,6 @@
 package com.mastercloudapps.twitterscheduler.application.service.task;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.togglz.core.manager.FeatureManager;
 
+import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetsUseCase;
 import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
+import com.mastercloudapps.twitterscheduler.domain.exception.ServiceException;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 @Configuration
@@ -21,15 +22,20 @@ import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 public class TweetPublisherTask {
 	
 	//TODO use spring profiles to run only in PRO
+	private static final String ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION = "Error executing TweetPublisherTask ";
 	
 	private static Logger logger = LoggerFactory.getLogger(TweetPublisherTask.class);
 	
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 	
 	private FeatureManager featureManager;
+	
+	private PublishPendingTweetsUseCase useCase;
 
-	public TweetPublisherTask(FeatureManager featureManager) {
+	public TweetPublisherTask(FeatureManager featureManager, final PublishPendingTweetsUseCase useCase) {
+		
 		this.featureManager = featureManager;
+		this.useCase = useCase;
 	}
 
 	@Async
@@ -37,9 +43,15 @@ public class TweetPublisherTask {
     public void execute() {
 		
 		if (featureManager.isActive(Features.SCHEDULER)){
-			//logger.info("Publisher is enabled. Current time {}", dateFormat.format(new Date()));
-			logger.info("Publisher is enabled. Current time {}", NullableInstant.now().getFormatted());
-		}
+			try {
+				//logger.info("Publisher is enabled. Current time {}", dateFormat.format(new Date()));
+				logger.info("Publisher is enabled. Current time {}", NullableInstant.now().getFormatted());	
+			} catch (Exception e) {
+				throw new ServiceException(ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION, e);
+			}
+		} else {
+			logger.info("Publisher not active {}", NullableInstant.now().getFormatted());
+	}
 	}
 
 }
