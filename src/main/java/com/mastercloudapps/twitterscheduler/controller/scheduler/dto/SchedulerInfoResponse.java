@@ -9,8 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @NoArgsConstructor
-public class SchedulerResponse {
+public class SchedulerInfoResponse {
 
 	private boolean active;
+	
+	private Long fixedRate;
+	
+	private Long initialDelay;
 	
 }

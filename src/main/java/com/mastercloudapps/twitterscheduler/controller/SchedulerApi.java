@@ -2,7 +2,7 @@ package com.mastercloudapps.twitterscheduler.controller;
 
 import org.springframework.http.ResponseEntity;
 
-import com.mastercloudapps.twitterscheduler.controller.scheduler.dto.SchedulerResponse;
+import com.mastercloudapps.twitterscheduler.controller.scheduler.dto.SchedulerInfoResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -16,13 +16,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public interface SchedulerApi {
 
 	@Operation(
-			summary = "Get scheduler status", 
-			description = "Get scheduler status", 
+			summary = "Get scheduler info", 
+			description = "Get scheduler info", 
 			tags = { "scheduler" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "successful operation", 
-                content = @Content(array = @ArraySchema(schema = @Schema(implementation = SchedulerResponse.class)))),
-        @ApiResponse(responseCode = "500", description = "internal server error") })
-	public ResponseEntity<SchedulerResponse> getStatus();	
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = SchedulerInfoResponse.class)))),
+        @ApiResponse(responseCode = "404", description = "not found") })
+	public ResponseEntity<SchedulerInfoResponse> getInfo();	
 	
 }
