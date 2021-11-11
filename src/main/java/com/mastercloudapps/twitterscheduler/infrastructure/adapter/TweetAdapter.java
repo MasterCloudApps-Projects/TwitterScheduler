@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import com.mastercloudapps.twitterscheduler.domain.exception.RepositoryException;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 import com.mastercloudapps.twitterscheduler.domain.tweet.TweetPort;
-import com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet.TweetJpaEntity;
-import com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet.TweetJpaMapper;
-import com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet.TweetJpaRepository;
+import com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet.TweetJpaEntity;
+import com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet.TweetJpaMapper;
+import com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet.TweetJpaRepository;
 
 @Component
 public class TweetAdapter implements TweetPort {

@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet;
+package com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -10,16 +10,17 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import com.mastercloudapps.twitterscheduler.mocks.TweetData;
+import com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending.PendingTweetJpaMapper;
+import com.mastercloudapps.twitterscheduler.mocks.PendingTweetData;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TweetJpaMapperTest {
+class PendingTweetJpaMapperTest {
 	
-	private TweetJpaMapper mapper;
+	private PendingTweetJpaMapper mapper;
 	
 	@BeforeEach
 	void setUp() {
-		mapper = new TweetJpaMapper();
+		mapper = new PendingTweetJpaMapper();
 	}
 	
 	@Nested
@@ -28,14 +29,13 @@ class TweetJpaMapperTest {
 
 		@Test
 		void mapAllAttributesIsOk() {
-			final var expectedResult = TweetData.MERRY_CHRISTMAS.create();
+			final var expectedResult = PendingTweetData.MERRY_CHRISTMAS.create();
 			final var jpaEntity = mapper.mapDomainObject(expectedResult);
 
 			assertThat(jpaEntity, is(notNullValue()));
 			assertThat(jpaEntity.getId(), is(expectedResult.id().id()));
 			assertThat(jpaEntity.getMessage(), is(expectedResult.message().message()));
-			assertThat(jpaEntity.getRequestedPublicationDate(), is(expectedResult.requestedPublicationDate().instant()));
-			assertThat(jpaEntity.getPublishedAt(), is(expectedResult.publishedAt().instant()));
+			assertThat(jpaEntity.getPublicationDate(), is(expectedResult.publicationDate().instant()));
 		}
 	}
 	

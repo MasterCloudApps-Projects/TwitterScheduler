@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.infrastructure.postgre.pending;
+package com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending;
 
 import java.time.Instant;
 

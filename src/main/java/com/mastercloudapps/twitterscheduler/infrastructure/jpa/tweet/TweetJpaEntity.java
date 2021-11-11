@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.infrastructure.postgre.tweet;
+package com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet;
 
 import java.time.Instant;
 

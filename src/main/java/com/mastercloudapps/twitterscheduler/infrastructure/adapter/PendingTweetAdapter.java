@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 import com.mastercloudapps.twitterscheduler.domain.exception.RepositoryException;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
-import com.mastercloudapps.twitterscheduler.infrastructure.postgre.pending.PendingTweetJpaEntity;
-import com.mastercloudapps.twitterscheduler.infrastructure.postgre.pending.PendingTweetJpaMapper;
-import com.mastercloudapps.twitterscheduler.infrastructure.postgre.pending.PendingTweetJpaRepository;
+import com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending.PendingTweetJpaEntity;
+import com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending.PendingTweetJpaMapper;
+import com.mastercloudapps.twitterscheduler.infrastructure.jpa.pending.PendingTweetJpaRepository;
 
 @Component
 public class PendingTweetAdapter implements PendingTweetPort {
