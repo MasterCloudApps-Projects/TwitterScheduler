@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.application.service.task;
+package com.mastercloudapps.twitterscheduler.controller;
 
 import java.text.SimpleDateFormat;
 
@@ -45,7 +45,7 @@ public class TweetPublisherTask {
 		if (featureManager.isActive(Features.SCHEDULER)){
 			try {
 				//logger.info("Publisher is enabled. Current time {}", dateFormat.format(new Date()));
-				logger.info("Publisher is enabled. Current time {}", NullableInstant.now().getFormatted());	
+				logger.info("Publisher is enabled. Current time now is {}", NullableInstant.now().getFormatted());	
 			} catch (Exception e) {
 				throw new ServiceException(ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION, e);
 			}
