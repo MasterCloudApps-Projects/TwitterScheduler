@@ -6,6 +6,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerConfiguration;
@@ -21,6 +23,8 @@ import com.mastercloudapps.twitterscheduler.domain.tweet.TweetPort;
 @Component
 public class PublisherService implements PublishPendingTweetsUseCase {
 
+	private static Logger logger = LoggerFactory.getLogger(PublisherService.class);
+	
 	private SchedulerConfiguration schedulerConfiguration;
 	
 	private TwitterService twitterService;
@@ -48,12 +52,15 @@ public class PublisherService implements PublishPendingTweetsUseCase {
 				.map(identity())
 				.collect(Collectors.toList());
 		
+		logger.info("Recovered " + pendingTweets.size() + " pending tweets to publish");
+
 		pendingTweets.forEach(pending -> {
 			
 			final var publishedTweet = twitterService.publish(PublishTweetRequest.builder()
 					.message(pending.message().message())
 					.build());
 			
+			logger.info("Published pending tweet with id = " + pending.id().id());
 			publishedTweet.ifPresent(published -> {
 				
 				pendingTweetPort.delete(pending.id().id());
