@@ -1,7 +1,5 @@
 package com.mastercloudapps.twitterscheduler.controller;
 
-import java.text.SimpleDateFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -42,8 +40,8 @@ public class TweetPublisherTask {
 		
 		if (featureManager.isActive(Features.SCHEDULER)){
 			try {
-				//logger.info("Publisher is enabled. Current time {}", dateFormat.format(new Date()));
-				logger.info("Publisher is enabled. Current time now is {}", NullableInstant.now().getFormatted());	
+				logger.info("Publisher is enabled. Current time now is {}", NullableInstant.now().getFormatted());
+				useCase.publishPending();
 			} catch (Exception e) {
 				throw new ServiceException(ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION, e);
 			}
