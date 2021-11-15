@@ -25,9 +25,7 @@ public class TweetPublisherTask {
 	private static final String ERR_MSG_IN_SERVICE_SCHEDULED_EXECUTION = "Error executing TweetPublisherTask ";
 	
 	private static Logger logger = LoggerFactory.getLogger(TweetPublisherTask.class);
-	
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-	
+		
 	private FeatureManager featureManager;
 	
 	private PublishPendingTweetsUseCase useCase;
