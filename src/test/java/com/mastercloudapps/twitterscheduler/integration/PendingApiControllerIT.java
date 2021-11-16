@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
-@Profile("test")
+@Profile("standalone")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("PendingApiController REST tests - RESTAssured")
 public class PendingApiControllerIT {

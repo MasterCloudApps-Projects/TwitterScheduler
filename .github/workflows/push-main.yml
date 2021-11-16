@@ -24,7 +24,7 @@ jobs:
       - name: Run Unitary tests
         run: mvn -B -Dtest=*Test* test
       - name: Run Integration tests
-        run: mvn -B -Dtest=*IT -Dspring.profiles.active=test test
+        run: mvn -B -Dtest=*IT -Dspring.profiles.active=standalone test
       - name: Build native with Maven
         run: mvn -B package
       - name: Upload jar for next job
