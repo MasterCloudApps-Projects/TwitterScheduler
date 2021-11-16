@@ -1,0 +1,42 @@
+package com.mastercloudapps.twitterscheduler.integration;
+
+import static io.restassured.RestAssured.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.annotation.Profile;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+
+@Profile("test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DisplayName("PendingApiController REST tests - RESTAssured")
+public class PendingApiControllerIT {
+
+	@LocalServerPort
+    int port;
+
+    @BeforeEach
+    public void setUp() {
+        RestAssured.port = port;
+        RestAssured.baseURI = "http://localhost:" + port;
+        RestAssured.useRelaxedHTTPSValidation();
+    }
+    
+    @Test
+	@DisplayName("Check that pending tweets can be retrieved")
+	public void getPendingTweetsTest() throws Exception {
+    	
+        when().
+            get("/api/pending").
+        then().
+            assertThat().
+                contentType(ContentType.JSON).
+                statusCode(200);
+    }
+   
+}
