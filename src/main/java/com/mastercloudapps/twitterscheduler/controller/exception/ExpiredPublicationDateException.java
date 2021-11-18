@@ -1,4 +1,4 @@
-package com.mastercloudapps.twitterscheduler.domain.exception;
+package com.mastercloudapps.twitterscheduler.controller.exception;
 
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 

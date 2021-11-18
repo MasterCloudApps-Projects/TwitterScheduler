@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.mastercloudapps.twitterscheduler.domain.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.domain.exception.MessageMaxLengthExceededException;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
@@ -68,25 +67,20 @@ class PendingTweetTest {
 				"ijk",
 				Instant.MAX,
 				null),
-		INVALID_EXPIRED_PUBLICATION_DATE(
-				1L,
-				"asdf",
-				LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant()),
 		INVALID_MESSAGE_MAX_LENGTH_EXCEEDED(
 				1L,
 				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
 						+ "industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type "
 						+ "and scrambled it to make a type specimen book. It has survived not only five years.",
-				LocalDateTime.of(2033, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant());
+						LocalDateTime.of(2033, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
+						NullableInstant.now().instant());
 
 		private final Long pendingTweetId;
 
 		private final String message;
 
 		private final Instant publicationDate;
-		
+
 		private final Instant createdAt;
 
 		MockData(final Long pendingTweetId, final String message, final Instant publicationDate, final Instant createdAt) {
@@ -109,79 +103,78 @@ class PendingTweetTest {
 			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_PUBLICATION_DATE));
 			assertThrows(NullPointerException.class, () -> createPendingTweet(MockData.INVALID_NULL_CREATED_AT));
 		}
-		
+
 		@Test
 		@DisplayName("Test creation with domain errors, expected customized domain exceptions")
 		void testDomainExceptions() {
-			assertThrows(MessageMaxLengthExceededException.class, () -> createPendingTweet(MockData.INVALID_MESSAGE_MAX_LENGTH_EXCEEDED));
-			assertThrows(ExpiredPublicationDateException.class, () -> createPendingTweet(MockData.INVALID_EXPIRED_PUBLICATION_DATE));
+			assertThrows(MessageMaxLengthExceededException.class, () -> createPendingTweet(MockData.INVALID_MESSAGE_MAX_LENGTH_EXCEEDED));		
 		}
 	}
-	
-	  @Nested
-	  @DisplayName("Test plan creation")
-	  class TestPlanCreation {
 
-	    private PendingTweet pendingTweet;
+	@Nested
+	@DisplayName("Test plan creation")
+	class TestPlanCreation {
 
-	    @BeforeEach
-	    void setUp() {
-	    	pendingTweet = createPendingTweet(MockData.VALID);
-	    }
+		private PendingTweet pendingTweet;
 
-	    @Test
-	    @DisplayName("Test creation, expected not null")
-	    void testNotNull() {
-	      assertThat(pendingTweet, is(notNullValue()));
-	    }
+		@BeforeEach
+		void setUp() {
+			pendingTweet = createPendingTweet(MockData.VALID);
+		}
 
-	    @Test
-	    @DisplayName("Test creation, expected content")
-	    void testEqualsText() {
-	      assertThat(pendingTweet.id().id(), is(MockData.VALID.pendingTweetId));
-	      assertThat(pendingTweet.message().message(), is(MockData.VALID.message));
-	      assertThat(pendingTweet.publicationDate().instant(), is(MockData.VALID.publicationDate));
-	      assertThat(pendingTweet.createdAt().instant(), is(MockData.VALID.createdAt));
-	    }
-	  }
-	  
-	  @Nested
-	  @DisplayName("Test plan for equals and hashcode")
-	  class TestPlanEqualsHashCode {
+		@Test
+		@DisplayName("Test creation, expected not null")
+		void testNotNull() {
+			assertThat(pendingTweet, is(notNullValue()));
+		}
 
-	    private PendingTweet pendingTweet;
+		@Test
+		@DisplayName("Test creation, expected content")
+		void testEqualsText() {
+			assertThat(pendingTweet.id().id(), is(MockData.VALID.pendingTweetId));
+			assertThat(pendingTweet.message().message(), is(MockData.VALID.message));
+			assertThat(pendingTweet.publicationDate().instant(), is(MockData.VALID.publicationDate));
+			assertThat(pendingTweet.createdAt().instant(), is(MockData.VALID.createdAt));
+		}
+	}
 
-	    @BeforeEach
-	    void setUp() {
-	    	pendingTweet = createPendingTweet(MockData.VALID);
-	    }
+	@Nested
+	@DisplayName("Test plan for equals and hashcode")
+	class TestPlanEqualsHashCode {
 
-	    @Test
-	    @DisplayName("Test with itself, expected equals")
-	    void testEqualsItself() {
-	      assertThat(pendingTweet, is(pendingTweet));
-	    }
+		private PendingTweet pendingTweet;
 
-	    @Test
-	    @DisplayName("Test with other object with same id, expected equals and same hashcode")
-	    void testSameId() {
-	      var sameId = createPendingTweet(MockData.VALID_OTHER_SAME_ID);
-	      assertThat(pendingTweet, is(sameId));
-	      assertThat(pendingTweet.hashCode(), is(sameId.hashCode()));
-	    }
+		@BeforeEach
+		void setUp() {
+			pendingTweet = createPendingTweet(MockData.VALID);
+		}
 
-	    @Test
-	    @DisplayName("Test with other null, expected not equals")
-	    void testNotEqualsNull() {
-	      assertNotEquals(null, pendingTweet);
-	    }
+		@Test
+		@DisplayName("Test with itself, expected equals")
+		void testEqualsItself() {
+			assertThat(pendingTweet, is(pendingTweet));
+		}
 
-	    @Test
-	    @DisplayName("Test with different id, expected not equals and different hashCode")
-	    void testDifferentId() {
-	      var other = createPendingTweet(MockData.VALID_OTHER_DIFFERENT_ID);
-	      assertThat(pendingTweet, is(not(other)));
-	      assertThat(pendingTweet.hashCode(), is(not(other.hashCode())));
-	    }
-	  }
+		@Test
+		@DisplayName("Test with other object with same id, expected equals and same hashcode")
+		void testSameId() {
+			var sameId = createPendingTweet(MockData.VALID_OTHER_SAME_ID);
+			assertThat(pendingTweet, is(sameId));
+			assertThat(pendingTweet.hashCode(), is(sameId.hashCode()));
+		}
+
+		@Test
+		@DisplayName("Test with other null, expected not equals")
+		void testNotEqualsNull() {
+			assertNotEquals(null, pendingTweet);
+		}
+
+		@Test
+		@DisplayName("Test with different id, expected not equals and different hashCode")
+		void testDifferentId() {
+			var other = createPendingTweet(MockData.VALID_OTHER_DIFFERENT_ID);
+			assertThat(pendingTweet, is(not(other)));
+			assertThat(pendingTweet.hashCode(), is(not(other.hashCode())));
+		}
+	}
 }
