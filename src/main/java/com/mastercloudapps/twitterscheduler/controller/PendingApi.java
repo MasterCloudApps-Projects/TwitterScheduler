@@ -10,7 +10,6 @@ import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetR
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PublishOnDemandResponse;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -61,7 +60,6 @@ public interface PendingApi {
         @ApiResponse(responseCode = "404", description = "pending tweet not found") })
 	public ResponseEntity<Void> deletePendingTweet(@PathVariable Long id);
 	
-	@Hidden
 	@Operation(
 			summary = "Publish a pending tweet immediately", 
 			description = "Publish a pending tweet immediately", 
