@@ -4,8 +4,12 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.mastercloudapps.twitterscheduler.domain.tweet.PublicationType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,5 +38,8 @@ public class TweetJpaEntity {
 	private Instant publishedAt;
 	
 	private Instant createdAt;
+	
+	@Enumerated(EnumType.STRING)
+	private PublicationType publicationType;
 	
 }
