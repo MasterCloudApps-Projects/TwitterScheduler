@@ -153,5 +153,43 @@ public class PendingApiControllerIT {
     			
     	return json;
     }
+    
+    @Test
+	@DisplayName("Publish on demand a pending tweet and check that it is not allowed yet")
+	public void publishOnDemandPendingTweetTest() throws Exception {
+
+        // create a pending tweet
+    	PendingTweet pendingTweet = PendingTweetData.HAPPY_NEW_YEAR.create();
+		PendingTweetRequest request = PendingTweetRequest
+				.builder()
+				.message(pendingTweet.message().message())
+				.publicationDate(pendingTweet.publicationDate().instant().toString())
+				.build();
+
+        PendingTweetResponse createdPendingTweet = 
+            given()
+                .auth()
+                    .basic(USER, PASSWORD)
+                .request()
+                    .body(this.getPendingTweetRequestAsJsonString(request))
+                    .contentType(ContentType.JSON).
+            when()
+                .post("api/pending").
+            then()
+                .assertThat()
+                .statusCode(201)
+                .body("message", equalTo(request.getMessage()))
+                .extract().as(PendingTweetResponse.class);
+
+        // delete created pending tweet
+        given()
+            .auth()
+                .basic(USER, PASSWORD)
+        .when()
+             .post("/api/pending/{id}/publish", createdPendingTweet.getId())
+        .then()
+             .assertThat()
+                .statusCode(405);
+    }
    
 }

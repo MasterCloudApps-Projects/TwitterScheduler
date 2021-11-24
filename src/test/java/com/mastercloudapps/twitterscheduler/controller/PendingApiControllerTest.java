@@ -27,6 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.togglz.core.manager.FeatureManager;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mastercloudapps.twitterscheduler.application.usecase.CreatePendingTweetUseCase;
@@ -59,6 +60,9 @@ class PendingApiControllerTest {
 	@MockBean
 	private FindOnePendingTweetUseCase findOneUseCase;
 
+	@MockBean
+	private FeatureManager featureManager;
+	
 	PendingTweetRequest pendingTweetRequest;
 
 	PendingTweetResponse pendingTweetResponse;
@@ -154,6 +158,19 @@ class PendingApiControllerTest {
 	    		.contentType(MediaType.APPLICATION_JSON)
 	    	)
 	    	.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	@DisplayName("Publish on demand pending tweet, expect not allowed")
+	void publishOnDemandPendingTweetTest() throws Exception {
+
+		when(featureManager.isActive(Mockito.any()))
+			.thenReturn(false);
+
+		mvc.perform(
+				post("/api/pending/" + pendingTweet.id().id() + "/publish")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isMethodNotAllowed());
 	}
 	
 	public static String asJsonString(final Object obj) {

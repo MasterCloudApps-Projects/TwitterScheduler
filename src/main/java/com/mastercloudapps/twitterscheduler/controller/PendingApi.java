@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
+import com.mastercloudapps.twitterscheduler.controller.pending.dto.PublishOnDemandResponse;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,4 +60,16 @@ public interface PendingApi {
         @ApiResponse(responseCode = "200", description = "pending tweet successfully deleted"),
         @ApiResponse(responseCode = "404", description = "pending tweet not found") })
 	public ResponseEntity<Void> deletePendingTweet(@PathVariable Long id);
+	
+	@Hidden
+	@Operation(
+			summary = "Publish a pending tweet immediately", 
+			description = "Publish a pending tweet immediately", 
+			tags = { "pending" })
+    @ApiResponses(value = { 
+        @ApiResponse(responseCode = "200", description = "pending tweet successfully published",
+                content = @Content(schema = @Schema(implementation = PublishOnDemandResponse.class))),
+        @ApiResponse(responseCode = "404", description = "pending tweet not found"),
+        @ApiResponse(responseCode = "405", description = "feature in progress") })
+	public ResponseEntity<PublishOnDemandResponse> publishOnDemand(@PathVariable Long id);
 }
