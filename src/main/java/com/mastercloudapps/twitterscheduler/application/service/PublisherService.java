@@ -17,6 +17,7 @@ import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTw
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
+import com.mastercloudapps.twitterscheduler.domain.tweet.PublicationType;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 import com.mastercloudapps.twitterscheduler.domain.tweet.TweetPort;
 
@@ -72,6 +73,7 @@ public class PublisherService implements PublishPendingTweetsUseCase {
 						.requestedPublicationDate(pending.publicationDate().instant())
 						.publishedAt(published.getPublishedAt())
 						.createdAt(NullableInstant.now().instant())
+						.publicationType(PublicationType.SCHEDULED)
 						.build());				
 			});
 		});		

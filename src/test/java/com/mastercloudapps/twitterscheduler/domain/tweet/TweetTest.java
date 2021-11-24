@@ -30,6 +30,7 @@ class TweetTest {
 				.requestedPublicationDate(mockData.requestedPublicationDate)
 				.publishedAt(mockData.publishedAt)
 				.createdAt(mockData.createdAt)
+				.publicationType(mockData.publicationType)
 				.build();
 	}
 
@@ -40,77 +41,88 @@ class TweetTest {
 				"https://twitter.com/username/status/123456789",
 				LocalDateTime.of(2030, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2030, 1, 1, 0, 3).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		VALID_OTHER_SAME_ID(
 				1L, 
 				"valid message 2",
 				"https://twitter.com/username/status/123456798",
 				LocalDateTime.of(2031, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2031, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		VALID_OTHER_DIFFERENT_ID(
 				2L, 
 				"valid message 3", 
 				"https://twitter.com/username/status/123456897",
 				LocalDateTime.of(2032, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2032, 1, 1, 0, 4).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		INVALID_NULL_ID(
 				null, 
 				"abc",
 				"https://twitter.com/username/status/123456789",
 				Instant.MAX,
 				Instant.MAX,
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		INVALID_NULL_MESSAGE(
 				1L,
 				null,
 				"https://twitter.com/username/status/123456789",
 				Instant.MAX,
 				Instant.MAX,
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		INVALID_NULL_URL(
 				1L,
 				"nmo",
 				null,
 				Instant.MAX,
 				Instant.MAX,
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		INVALID_NULL_REQUESTED_PUBLICATION_DATE(
 				1L,
 				"xyz",
 				"https://twitter.com/username/status/123456789",
 				null,
 				Instant.MAX,
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		INVALID_NULL_PUBLISHED_AT(
 				1L,
 				"ijk",
 				"https://twitter.com/username/status/123456789",
 				Instant.MAX,
 				Instant.MAX,
-				null),
+				null,
+				PublicationType.SCHEDULED),
 		INVALID_NULL_CREATED_AT(
 				1L,
 				"ijk",
 				"https://twitter.com/username/status/123456789",
 				Instant.MAX,
 				null,
-				NullableInstant.now().instant()),
-		INVALID_EXPIRED_REQUESTED_PUBLICATION_DATE(
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
+		INVALID_NULL_PUBLICATION_TYPE(
 				1L,
-				"asdf",
+				"valid message 1",
 				"https://twitter.com/username/status/123456789",
-				LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
-				Instant.MAX,
-				NullableInstant.now().instant()),
+				LocalDateTime.of(2030, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
+				LocalDateTime.of(2030, 1, 1, 0, 3).toInstant(ZoneOffset.UTC),
+				NullableInstant.now().instant(),
+				null),
 		INVALID_EXPIRED_PUBLISHED_AT(
 				1L,
 				"asdf",
 				"https://twitter.com/username/status/123456789",
 				LocalDateTime.of(2032, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2000, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant()),
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED),
 		INVALID_MESSAGE_MAX_LENGTH_EXCEEDED(
 				1L,
 				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
@@ -119,7 +131,8 @@ class TweetTest {
 				"https://twitter.com/username/status/123456789",
 				LocalDateTime.of(2033, 1, 1, 0, 0).toInstant(ZoneOffset.UTC),
 				LocalDateTime.of(2033, 1, 1, 0, 5).toInstant(ZoneOffset.UTC),
-				NullableInstant.now().instant());
+				NullableInstant.now().instant(),
+				PublicationType.SCHEDULED);
 
 		private final Long tweetId;
 
@@ -132,16 +145,19 @@ class TweetTest {
 		private final Instant publishedAt;
 		
 		private final Instant createdAt;
+		
+		private final PublicationType publicationType;
 
 		MockData(final Long tweetId, final String message, final String url, 
 				final Instant requestedPublicationDate, final Instant publishedAt,
-				final Instant createdAt) {
+				final Instant createdAt, final PublicationType publicationType) {
 			this.tweetId = tweetId;
 			this.message = message;
 			this.url = url;
 			this.requestedPublicationDate = requestedPublicationDate;
 			this.publishedAt = publishedAt;
 			this.createdAt = createdAt;
+			this.publicationType = publicationType;
 		}
 	}
 
@@ -158,6 +174,7 @@ class TweetTest {
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_REQUESTED_PUBLICATION_DATE));
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_PUBLISHED_AT));
 			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_CREATED_AT));
+			assertThrows(NullPointerException.class, () -> createTweet(MockData.INVALID_NULL_PUBLICATION_TYPE));
 		}
 		
 		@Test
@@ -193,6 +210,7 @@ class TweetTest {
 	      assertThat(tweet.requestedPublicationDate().instant(), is(MockData.VALID.requestedPublicationDate));
 	      assertThat(tweet.publishedAt().instant(), is(MockData.VALID.publishedAt));
 	      assertThat(tweet.createdAt().instant(), is(MockData.VALID.createdAt));
+	      assertThat(tweet.publicationType(), is(MockData.VALID.publicationType));
 	    }
 	  }
 	  

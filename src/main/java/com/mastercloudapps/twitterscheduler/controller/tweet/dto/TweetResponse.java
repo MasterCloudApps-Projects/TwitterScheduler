@@ -18,5 +18,6 @@ public class TweetResponse {
 	private String requestedPublicationDate;
 	private String publishedAt;
 	private String createdAt;
+	private String publicationType;
 
 }

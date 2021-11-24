@@ -24,6 +24,7 @@ public class TweetJpaMapper {
 				.requestedPublicationDate(tweetEntity.getRequestedPublicationDate())
 				.publishedAt(tweetEntity.getPublishedAt())
 				.createdAt(tweetEntity.getCreatedAt())
+				.publicationType(tweetEntity.getPublicationType())
 				.build();
 	}
 	
@@ -41,6 +42,7 @@ public class TweetJpaMapper {
 				.requestedPublicationDate(tweet.requestedPublicationDate().instant())
 				.publishedAt(tweet.publishedAt().instant())
 				.createdAt(tweet.createdAt().instant())
+				.publicationType(tweet.publicationType())
 				.build();
 	}
 

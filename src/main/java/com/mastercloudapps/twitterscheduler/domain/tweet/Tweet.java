@@ -3,6 +3,7 @@ package com.mastercloudapps.twitterscheduler.domain.tweet;
 import static java.util.Objects.requireNonNull;
 
 import java.time.Instant;
+import java.util.Objects;
 
 import com.mastercloudapps.twitterscheduler.domain.shared.AggregateRoot;
 import com.mastercloudapps.twitterscheduler.domain.shared.Message;
@@ -22,6 +23,8 @@ public class Tweet extends AggregateRoot<TweetId> {
 	private NullableInstant publishedAt;
 	
 	private NullableInstant createdAt;
+	
+	private PublicationType publicationType;
 
 	private Tweet(final Builder builder) {
 		super(builder.tweetId);
@@ -30,6 +33,7 @@ public class Tweet extends AggregateRoot<TweetId> {
 		this.requestedPublicationDate = builder.requestedPublicationDate;
 		this.publishedAt = builder.publishedAt;
 		this.createdAt = builder.createdAt;
+		this.publicationType = builder.publicationType;
 	}
 
 	public Message message() {
@@ -55,6 +59,11 @@ public class Tweet extends AggregateRoot<TweetId> {
 	public NullableInstant createdAt() {
 		
 		return createdAt;
+	}
+	
+	public PublicationType publicationType() {
+
+		return publicationType;
 	}
 
 	public static IdStep builder() {
@@ -89,7 +98,12 @@ public class Tweet extends AggregateRoot<TweetId> {
 	
 	public interface CreatedAtStep {
 		
-		Build createdAt(final Instant instant);
+		PublicationTypeStep createdAt(final Instant instant);
+	}
+	
+	public interface PublicationTypeStep {
+
+		Build publicationType(PublicationType publicationType);
 	}
 
 	public interface Build {
@@ -98,7 +112,7 @@ public class Tweet extends AggregateRoot<TweetId> {
 	}
 
 	public static class Builder implements IdStep, MessageStep, UrlStep, 
-		RequestedPublicationDateStep, PublishedAtStep, CreatedAtStep, Build {
+		RequestedPublicationDateStep, PublishedAtStep, CreatedAtStep, PublicationTypeStep, Build {
 
 		private TweetId tweetId;
 
@@ -111,6 +125,8 @@ public class Tweet extends AggregateRoot<TweetId> {
 		private NullableInstant publishedAt;
 		
 		private NullableInstant createdAt;
+		
+		private PublicationType publicationType;
 
 		@Override
 		public MessageStep id(Long tweetId) {
@@ -145,11 +161,17 @@ public class Tweet extends AggregateRoot<TweetId> {
 		}
 		
 		@Override
-		public Build createdAt(Instant instant) {
+		public PublicationTypeStep createdAt(Instant instant) {
 			Instant creationDate = requireNonNull(instant, "CreatedAt date cannot be null.");
 			NullableInstant niCreatedAt = new NullableInstant(creationDate);
 			this.createdAt = niCreatedAt;
 			return this;
+		}
+		
+		@Override
+		public Build publicationType(PublicationType publicationType) {
+			this.publicationType = Objects.requireNonNull(publicationType);
+		      return this;
 		}
 		
 		@Override

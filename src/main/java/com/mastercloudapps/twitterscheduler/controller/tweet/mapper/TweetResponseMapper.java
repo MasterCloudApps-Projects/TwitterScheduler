@@ -23,6 +23,7 @@ public class TweetResponseMapper {
 		final var requestedPublicationDate = this.mapRequestedPublicationDate(tweet);
 		final var publishedAt = this.mapPublishedAt(tweet);
 		final var createdAt = this.mapCreatedAt(tweet);
+		final var publicationType = this.mapPublicationType(tweet);
 		
 		var responseBuilder = TweetResponse
 				.builder()
@@ -31,7 +32,8 @@ public class TweetResponseMapper {
 				.url(url)
 				.requestedPublicationDate(requestedPublicationDate)
 				.publishedAt(publishedAt)
-				.createdAt(createdAt);
+				.createdAt(createdAt)
+				.publicationType(publicationType);
 		
 		return responseBuilder.build();
 	}
@@ -65,5 +67,10 @@ public class TweetResponseMapper {
 	private String mapCreatedAt(final Tweet request) {
 
 		return request.createdAt().getFormatted();
+	}
+	
+	private String mapPublicationType(final Tweet request) {
+
+		return request.publicationType().name();
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PublishOnDemandResponse;
+import com.mastercloudapps.twitterscheduler.domain.tweet.PublicationType;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 
 @Component
@@ -41,6 +42,7 @@ public class PublishOnDemandResponseMapper {
 				.requestedPublicationDate(Instant.MAX)
 				.publishedAt(Instant.MAX)
 				.createdAt(Instant.MAX)
+				.publicationType(PublicationType.ON_DEMAND)
 				.build();
 
 		return this.mapResponse(tweet);

@@ -2,6 +2,7 @@ package com.mastercloudapps.twitterscheduler.mocks;
 
 import java.time.Instant;
 
+import com.mastercloudapps.twitterscheduler.domain.tweet.PublicationType;
 import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 
 public enum TweetData {
@@ -11,14 +12,16 @@ public enum TweetData {
 			"https://twitter.com/username/status/123456789",
 			Instant.parse(Constants.REQUESTED_PUBLICATION_DATE_NEW_YEAR_2023),
 			Instant.parse(Constants.PUBLISHED_AT_NEW_YEAR_2023),
-			Instant.parse(Constants.CREATED_AT_NEW_YEAR_2023)),
+			Instant.parse(Constants.CREATED_AT_NEW_YEAR_2023),
+			PublicationType.SCHEDULED),
 	MERRY_CHRISTMAS(
 			1L,
 			"Merry Christmas!",
 			"https://twitter.com/username/status/987654321",
 			Instant.parse(Constants.REQUESTED_PUBLICATION_DATE_CHRISTMAS_2024),
 			Instant.parse(Constants.PUBLISHED_AT_CHRISTMAS_2024),
-			Instant.parse(Constants.CREATED_AT_CHRISTMAS_2024));
+			Instant.parse(Constants.CREATED_AT_CHRISTMAS_2024),
+			PublicationType.SCHEDULED);
 
 	private final Long id;
 
@@ -31,10 +34,12 @@ public enum TweetData {
 	private final Instant publishedAt;
 	
 	private final Instant createdAt;
+	
+	private final PublicationType publicationType;
 
 	TweetData(final Long id, final String message, final String url, 
 			final Instant requestedPublicationDate, final Instant publishedAt,
-			final Instant createdAt) {
+			final Instant createdAt, final PublicationType publicationType) {
 
 		this.id = id;
 		this.message = message;
@@ -42,6 +47,7 @@ public enum TweetData {
 		this.requestedPublicationDate = requestedPublicationDate;
 		this.publishedAt = publishedAt;
 		this.createdAt = createdAt;
+		this.publicationType = publicationType;
 	}
 
 	public Tweet create() {
@@ -53,6 +59,7 @@ public enum TweetData {
 				.requestedPublicationDate(this.requestedPublicationDate)
 				.publishedAt(this.publishedAt)
 				.createdAt(this.createdAt)
+				.publicationType(this.publicationType)
 				.build();
 	}
 
