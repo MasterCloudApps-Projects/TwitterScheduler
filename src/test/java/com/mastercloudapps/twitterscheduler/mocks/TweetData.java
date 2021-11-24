@@ -21,7 +21,15 @@ public enum TweetData {
 			Instant.parse(Constants.REQUESTED_PUBLICATION_DATE_CHRISTMAS_2024),
 			Instant.parse(Constants.PUBLISHED_AT_CHRISTMAS_2024),
 			Instant.parse(Constants.CREATED_AT_CHRISTMAS_2024),
-			PublicationType.SCHEDULED);
+			PublicationType.SCHEDULED),
+	HAPPY_BIRTHDAY_ON_DEMAND(
+			4L,
+			"Happy birthday!",
+			"https://twitter.com/username/status/5437654321",
+			Instant.parse(Constants.REQUESTED_PUBLICATION_DATE_HAPPY_BIRTHDAY_ON_DEMAND),
+			Instant.parse(Constants.PUBLISHED_AT_HAPPY_BIRTHDAY_ON_DEMAND),
+			Instant.parse(Constants.CREATED_AT_HAPPY_BIRTHDAY_ON_DEMAND),
+			PublicationType.ON_DEMAND);
 
 	private final Long id;
 
@@ -69,14 +77,20 @@ public enum TweetData {
 		public static final String REQUESTED_PUBLICATION_DATE_NEW_YEAR_2023 = "2023-01-01T00:00:00Z";
 
 		public static final String REQUESTED_PUBLICATION_DATE_CHRISTMAS_2024 = "2024-12-25T00:00:00Z";
+		
+		public static final String REQUESTED_PUBLICATION_DATE_HAPPY_BIRTHDAY_ON_DEMAND = "2028-12-25T00:00:00Z";
 
 		public static final String PUBLISHED_AT_NEW_YEAR_2023 = "2023-01-01T00:01:00Z";
 
 		public static final String PUBLISHED_AT_CHRISTMAS_2024 = "2024-12-25T00:02:00Z";
 		
+		public static final String PUBLISHED_AT_HAPPY_BIRTHDAY_ON_DEMAND = "2024-12-25T00:02:00Z";
+		
 		public static final String CREATED_AT_NEW_YEAR_2023 = "2021-10-01T00:00:00Z";
 		
 		public static final String CREATED_AT_CHRISTMAS_2024 = "2021-11-01T00:00:00Z";
+		
+		public static final String CREATED_AT_HAPPY_BIRTHDAY_ON_DEMAND = "2021-12-01T00:00:00Z";
 
 		private Constants() {}
 	}

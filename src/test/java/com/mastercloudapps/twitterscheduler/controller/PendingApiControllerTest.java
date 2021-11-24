@@ -34,10 +34,14 @@ import com.mastercloudapps.twitterscheduler.application.usecase.CreatePendingTwe
 import com.mastercloudapps.twitterscheduler.application.usecase.DeletePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.FindAllPendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.FindOnePendingTweetUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetOnDemandUseCase;
+import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetsUseCase;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
+import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 import com.mastercloudapps.twitterscheduler.mocks.PendingTweetData;
+import com.mastercloudapps.twitterscheduler.mocks.TweetData;
 
 
 @SpringBootTest
@@ -49,6 +53,9 @@ class PendingApiControllerTest {
 	private MockMvc mvc;
 
 	@MockBean
+	private FeatureManager featureManager;
+	
+	@MockBean
 	private CreatePendingTweetUseCase createTweetUseCase;
 	
 	@MockBean
@@ -59,10 +66,13 @@ class PendingApiControllerTest {
 	
 	@MockBean
 	private FindOnePendingTweetUseCase findOneUseCase;
-
-	@MockBean
-	private FeatureManager featureManager;
 	
+	@MockBean
+	private PublishPendingTweetOnDemandUseCase publishPendingTweetOnDemandUseCase;
+	
+	@MockBean
+	private PublishPendingTweetsUseCase publishPendingTweetsUseCase;
+
 	PendingTweetRequest pendingTweetRequest;
 
 	PendingTweetResponse pendingTweetResponse;
@@ -70,6 +80,8 @@ class PendingApiControllerTest {
 	PendingTweet pendingTweet;
 	
 	PendingTweet anotherPendingTweet;
+	
+	Tweet onDemandTweet;
 
 	@BeforeEach
 	void setup() {
@@ -83,6 +95,9 @@ class PendingApiControllerTest {
 				.message(pendingTweet.message().message())
 				.publicationDate(pendingTweet.publicationDate().instant().toString())
 				.build();
+		
+		onDemandTweet = TweetData.HAPPY_BIRTHDAY_ON_DEMAND.create(); 
+		
 	}
 
 	@Test
@@ -161,8 +176,8 @@ class PendingApiControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Publish on demand pending tweet, expect not allowed")
-	void publishOnDemandPendingTweetTest() throws Exception {
+	@DisplayName("Publish on demand pending tweet when feature not active, expect not allowed")
+	void publishOnDemandPendingTweetWhenFeatureNotActiveTest() throws Exception {
 
 		when(featureManager.isActive(Mockito.any()))
 			.thenReturn(false);
@@ -171,6 +186,39 @@ class PendingApiControllerTest {
 				post("/api/pending/" + pendingTweet.id().id() + "/publish")
 				.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isMethodNotAllowed());
+	}
+	
+	@Test
+	@DisplayName("Publish on demand pending tweet when feature active and pending doesn't exist, expect not found")
+	void publishOnDemandNotExistingPendingTweetWhenFeatureActiveTest() throws Exception {
+
+		when(featureManager.isActive(Mockito.any()))
+			.thenReturn(true);
+		
+		when(publishPendingTweetOnDemandUseCase.publishImmediatly(any()))
+			.thenReturn(Optional.empty());
+
+		mvc.perform(
+				post("/api/pending/" + pendingTweet.id().id() + "/publish")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isNotFound());
+	}
+	
+	@Test
+	@DisplayName("Publish on demand pending tweet when feature active and pending exist, expect OK")
+	void publishOnDemandExistingPendingTweetWhenFeatureActiveTest() throws Exception {
+
+		when(featureManager.isActive(Mockito.any()))
+			.thenReturn(true);
+		
+		when(publishPendingTweetOnDemandUseCase.publishImmediatly(any()))
+			.thenReturn(Optional.of(onDemandTweet));
+
+		mvc.perform(
+				post("/api/pending/" + pendingTweet.id().id() + "/publish")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.tweetId", equalTo(Math.toIntExact(onDemandTweet.id().id()))));
 	}
 	
 	public static String asJsonString(final Object obj) {
