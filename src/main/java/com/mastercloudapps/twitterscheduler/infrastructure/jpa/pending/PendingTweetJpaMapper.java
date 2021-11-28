@@ -16,13 +16,14 @@ public class PendingTweetJpaMapper {
 			throw new RepositoryException("Empty entity");
 		}
 		
-		return PendingTweet
+		final var builder = PendingTweet
 				.builder()
 				.id(pendingTweetEntity.getId())
 				.message(pendingTweetEntity.getMessage())
 				.publicationDate(pendingTweetEntity.getPublicationDate())
-				.createdAt(pendingTweetEntity.getCreatedAt())
-				.build();
+				.createdAt(pendingTweetEntity.getCreatedAt());
+		
+		return builder.build();
 	}
 	
 	public PendingTweetJpaEntity mapCreatePendingTweet(final PendingTweet pendingTweet) {
@@ -31,12 +32,13 @@ public class PendingTweetJpaMapper {
 			throw new RepositoryException("Empty domain object");
 		}
 		
-		return PendingTweetJpaEntity
+		final var builder = PendingTweetJpaEntity
 				.builder()
 				.message(pendingTweet.message().message())
 				.publicationDate(pendingTweet.publicationDate().instant())
-				.createdAt(pendingTweet.createdAt().instant())
-				.build();
+				.createdAt(pendingTweet.createdAt().instant());
+		
+		return builder.build();
 	}
 	
 	public PendingTweetJpaEntity mapDomainObject(final PendingTweet pendingTweet) {
@@ -45,13 +47,14 @@ public class PendingTweetJpaMapper {
 			throw new RepositoryException("Empty domain object");
 		}
 		
-		return PendingTweetJpaEntity
+		final var builder = PendingTweetJpaEntity
 				.builder()
 				.id(pendingTweet.id().id())
 				.message(pendingTweet.message().message())
 				.publicationDate(pendingTweet.publicationDate().instant())
-				.createdAt(pendingTweet.createdAt().instant())
-				.build();
+				.createdAt(pendingTweet.createdAt().instant());
+		
+		return builder.build();
 	}
 
 }

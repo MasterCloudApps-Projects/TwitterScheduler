@@ -16,7 +16,7 @@ public class TweetJpaMapper {
 			throw new RepositoryException("Empty entity");
 		}
 		
-		return Tweet
+		final var builder = Tweet
 				.builder()
 				.id(tweetEntity.getId())
 				.message(tweetEntity.getMessage())
@@ -24,8 +24,9 @@ public class TweetJpaMapper {
 				.requestedPublicationDate(tweetEntity.getRequestedPublicationDate())
 				.publishedAt(tweetEntity.getPublishedAt())
 				.createdAt(tweetEntity.getCreatedAt())
-				.publicationType(tweetEntity.getPublicationType())
-				.build();
+				.publicationType(tweetEntity.getPublicationType());
+		
+		return builder.build();
 	}
 	
 	public TweetJpaEntity mapDomainObject(final Tweet tweet) {
@@ -34,7 +35,7 @@ public class TweetJpaMapper {
 			throw new RepositoryException("Empty domain object");
 		}
 		
-		return TweetJpaEntity
+		final var builder = TweetJpaEntity
 				.builder()
 				.id(tweet.id().id())
 				.message(tweet.message().message())
@@ -42,8 +43,9 @@ public class TweetJpaMapper {
 				.requestedPublicationDate(tweet.requestedPublicationDate().instant())
 				.publishedAt(tweet.publishedAt().instant())
 				.createdAt(tweet.createdAt().instant())
-				.publicationType(tweet.publicationType())
-				.build();
+				.publicationType(tweet.publicationType());
+		
+		return builder.build();
 	}
 
 }
