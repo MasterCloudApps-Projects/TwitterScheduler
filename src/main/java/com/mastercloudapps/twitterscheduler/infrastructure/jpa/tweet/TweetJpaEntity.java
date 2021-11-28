@@ -1,12 +1,16 @@
 package com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet;
 
 import java.time.Instant;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.mastercloudapps.twitterscheduler.domain.tweet.PublicationType;
@@ -41,5 +45,8 @@ public class TweetJpaEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private PublicationType publicationType;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="tweet", fetch = FetchType.EAGER)
+    private Collection<TweetImageJpaEntity> images;
 	
 }
