@@ -3,6 +3,7 @@ package com.mastercloudapps.twitterscheduler.controller.pending.mapper;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.Mockito.when;
 
 import java.time.format.DateTimeParseException;
 
@@ -12,20 +13,33 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.togglz.core.manager.FeatureManager;
 
+import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.controller.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
+import com.mastercloudapps.twitterscheduler.controller.validator.ImageAvailable;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ExtendWith(MockitoExtension.class)
 class CreatePendingTweetRequestMapperTest {
 
 	private CreatePendingTweetRequestMapper mapper;
 
+	@Mock
+	private ImageAvailable imageAvailableValidator;
+	
+	@Mock
+	private FeatureManager featureManager;
+	
 	@BeforeEach
 	void setUp() {
-		mapper = new CreatePendingTweetRequestMapper();
+		mapper = new CreatePendingTweetRequestMapper(featureManager, imageAvailableValidator);
 	}
 
 	private PendingTweetRequest buildRequest(MockData mockData) {
@@ -80,7 +94,7 @@ class CreatePendingTweetRequestMapperTest {
 		}
 
 		@Test
-		void mapQueryRequest_withInvalidDate_shouldThrowException() {
+		void mapQueryRequest_withInvalidDate_shouldReturnException() {
 
 			assertMapperThrowsException(DateTimeParseException.class, MockData.REQUEST_WITH_INVALID_DATE);
 		}
@@ -98,6 +112,9 @@ class CreatePendingTweetRequestMapperTest {
 
 		@Test
 		void mapAllAttributesIsOk() {
+
+			when(featureManager.isActive(Features.TWEETS_WITH_IMAGES)).thenReturn(false);
+			
 			PendingTweetRequest request = buildRequest(MockData.VALID_REQUEST);
 			final var createPendingTweetOperation = mapper.mapRequest(request);
 

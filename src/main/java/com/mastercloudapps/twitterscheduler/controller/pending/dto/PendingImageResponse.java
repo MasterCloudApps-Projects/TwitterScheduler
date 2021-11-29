@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PendingImageResponse {
 	
-	private Long pendingImageId;
+	private Long id;
 	private String url;
 
 }

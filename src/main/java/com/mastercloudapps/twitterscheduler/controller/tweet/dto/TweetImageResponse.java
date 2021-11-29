@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TweetImageResponse {
 	
-	private Long tweetImageId;
+	private Long id;
 	private Long size;
 	private String type;
 	private Integer width;

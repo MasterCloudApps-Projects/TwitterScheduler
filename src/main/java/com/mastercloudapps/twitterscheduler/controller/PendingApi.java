@@ -48,8 +48,10 @@ public interface PendingApi {
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "201", description = "pending tweet successfully created",
                 content = @Content(schema = @Schema(implementation = PendingTweetResponse.class))),
+        @ApiResponse(responseCode = "400", description = "bad request (malformed image URLs included)"),
+        @ApiResponse(responseCode = "422", description = "some image is not available"),
         @ApiResponse(responseCode = "500", description = "internal server error") })
-	public PendingTweetResponse createPendingTweet(@RequestBody PendingTweetRequest request);
+	public ResponseEntity<PendingTweetResponse> createPendingTweet(@RequestBody PendingTweetRequest request);
 	
 	@Operation(
 			summary = "Deletes a pending tweet and its images", 
@@ -68,6 +70,6 @@ public interface PendingApi {
         @ApiResponse(responseCode = "200", description = "pending tweet successfully published",
                 content = @Content(schema = @Schema(implementation = PublishOnDemandResponse.class))),
         @ApiResponse(responseCode = "404", description = "pending tweet not found"),
-        @ApiResponse(responseCode = "405", description = "feature in progress") })
+        @ApiResponse(responseCode = "405", description = "Feature in progress") })
 	public ResponseEntity<PublishOnDemandResponse> publishOnDemand(@PathVariable Long id);
 }

@@ -3,6 +3,8 @@ package com.mastercloudapps.twitterscheduler.controller;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mastercloudapps.twitterscheduler.application.usecase.CreatePendingTweetUseCase;
@@ -19,6 +20,8 @@ import com.mastercloudapps.twitterscheduler.application.usecase.DeletePendingTwe
 import com.mastercloudapps.twitterscheduler.application.usecase.FindAllPendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.FindOnePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetOnDemandUseCase;
+import com.mastercloudapps.twitterscheduler.controller.exception.ImageNotAvailableException;
+import com.mastercloudapps.twitterscheduler.controller.exception.MalformedImageUrlException;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetRequest;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PublishOnDemandResponse;
@@ -36,6 +39,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 @SecurityRequirement(name = "twitter-scheduler")
 public class PendingApiController implements PendingApi {
 
+	private static Logger logger = LoggerFactory.getLogger(PendingApiController.class);
+	
 	private final CreatePendingTweetRequestMapper createPendingTweetRequestMapper;
 
 	private final PendingTweetResponseMapper pendingResponseMapper;
@@ -100,21 +105,32 @@ public class PendingApiController implements PendingApi {
 				findOnePendingTweetRequestMapper.mapRequest(id));
 
 		if(pendingTweet.isPresent()) {
-			return new ResponseEntity<>(pendingResponseMapper.mapResponse(pendingTweet.get()), HttpStatus.OK);
+			return new ResponseEntity<>(pendingResponseMapper.mapResponse(pendingTweet.get()),
+					HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public PendingTweetResponse createPendingTweet(PendingTweetRequest request) {
+	public ResponseEntity<PendingTweetResponse> createPendingTweet(PendingTweetRequest request) {
 
-		final var createPendingTweetRequest = createPendingTweetRequestMapper.mapRequest(request);
+		try {
+			final var createPendingTweetRequest = createPendingTweetRequestMapper.mapRequest(request);
+			
+			final var createPendingTweetResponse = createPendingTweetUseCase.create(createPendingTweetRequest);
 
-		final var createPendingTweetResponse = createPendingTweetUseCase.create(createPendingTweetRequest);
-
-		return pendingResponseMapper.mapResponse(createPendingTweetResponse);
+			return new ResponseEntity<>(pendingResponseMapper.mapResponse(createPendingTweetResponse),
+					HttpStatus.CREATED);
+		}
+		catch(ImageNotAvailableException e) {
+			logger.warn(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		catch(MalformedImageUrlException e) {
+			logger.warn(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}		
 	}
 
 	@DeleteMapping("/{id}")
