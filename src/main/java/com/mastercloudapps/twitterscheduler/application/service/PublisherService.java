@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.togglz.core.manager.FeatureManager;
 
 import com.mastercloudapps.twitterscheduler.application.model.operation.PublishPendingTweetOnDemandOperation;
 import com.mastercloudapps.twitterscheduler.application.model.scheduler.SchedulerConfiguration;
@@ -19,7 +18,6 @@ import com.mastercloudapps.twitterscheduler.application.model.twitter.PublishTwe
 import com.mastercloudapps.twitterscheduler.application.service.twitter.TwitterService;
 import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetOnDemandUseCase;
 import com.mastercloudapps.twitterscheduler.application.usecase.PublishPendingTweetsUseCase;
-import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
@@ -40,18 +38,15 @@ public class PublisherService implements PublishPendingTweetsUseCase, PublishPen
 	private PendingTweetPort pendingTweetPort;
 
 	private TweetPort tweetPort;
-	
-	private FeatureManager featureManager;
 
 	public PublisherService(final SchedulerConfiguration schedulerConfiguration, 
 			final TwitterService twitterService, final PendingTweetPort pendingTweetPort, 
-			final TweetPort tweetPort, final FeatureManager featureManager) {
+			final TweetPort tweetPort) {
 
 		this.schedulerConfiguration = schedulerConfiguration;
 		this.twitterService = twitterService;
 		this.pendingTweetPort = pendingTweetPort;
 		this.tweetPort = tweetPort;
-		this.featureManager = featureManager;
 	}
 
 	@Override
@@ -114,14 +109,12 @@ public class PublisherService implements PublishPendingTweetsUseCase, PublishPen
 		final var builder = PublishTweetRequest.builder()
 				.message(pendingTweet.message().message());
 		
-		if(featureManager.isActive(Features.TWEETS_WITH_IMAGES)) {
 			Optional.ofNullable(pendingTweet.getImages())
 			.ifPresent(images -> {
 				builder.images(images.stream()
 						.map(image -> image.url().url())
 						.collect(Collectors.toList()));
-			});	
-		}
+			});
 		
 		return builder.build();
 	}

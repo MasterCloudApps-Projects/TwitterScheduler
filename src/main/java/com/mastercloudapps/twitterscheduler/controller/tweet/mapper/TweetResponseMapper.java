@@ -3,11 +3,8 @@ package com.mastercloudapps.twitterscheduler.controller.tweet.mapper;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.togglz.core.manager.FeatureManager;
 
-import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetImageResponse;
 import com.mastercloudapps.twitterscheduler.controller.tweet.dto.TweetResponse;
@@ -16,13 +13,6 @@ import com.mastercloudapps.twitterscheduler.domain.tweet.Tweet;
 @Component
 public class TweetResponseMapper {
 
-	private FeatureManager featureManager;
-	
-	@Autowired
-	public TweetResponseMapper(final FeatureManager featureManager) {
-		this.featureManager = featureManager;
-	}
-	
 	public TweetResponse mapResponse(Tweet tweet) {
 		
 		if (Optional.ofNullable(tweet).isEmpty()) {
@@ -47,8 +37,7 @@ public class TweetResponseMapper {
 				.createdAt(createdAt)
 				.publicationType(publicationType);
 		
-		if(featureManager.isActive(Features.TWEETS_WITH_IMAGES)) {
-			Optional.ofNullable(tweet.getImages())
+		Optional.ofNullable(tweet.getImages())
 			.ifPresent(images -> builder.images(images.stream()
 				.map(image -> TweetImageResponse.builder()
 						.id(image.id().id())
@@ -58,7 +47,6 @@ public class TweetResponseMapper {
 						.height(image.height().height())
 						.build())
 				.collect(Collectors.toList())));	
-		}
 		
 		return builder.build();
 	}

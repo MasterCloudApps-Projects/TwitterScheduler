@@ -8,10 +8,6 @@ public enum Features implements Feature {
 
 	@EnabledByDefault
 	@Label("Scheduler")
-	SCHEDULER,
-	
-	@EnabledByDefault
-	@Label("Tweets with images")
-	TWEETS_WITH_IMAGES
+	SCHEDULER
 
 }

@@ -3,11 +3,8 @@ package com.mastercloudapps.twitterscheduler.controller.pending.mapper;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.togglz.core.manager.FeatureManager;
 
-import com.mastercloudapps.twitterscheduler.configuration.featureflags.Features;
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingImageResponse;
 import com.mastercloudapps.twitterscheduler.controller.pending.dto.PendingTweetResponse;
@@ -15,13 +12,6 @@ import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 
 @Component
 public class PendingTweetResponseMapper {
-	
-	private FeatureManager featureManager;
-	
-	@Autowired
-	public PendingTweetResponseMapper(final FeatureManager featureManager) {
-		this.featureManager = featureManager;
-	}
 
 	public PendingTweetResponse mapResponse(PendingTweet pendingTweet) {
 		
@@ -41,15 +31,13 @@ public class PendingTweetResponseMapper {
 				.publicationDate(publicationDate)
 				.createdAt(createdAt);
 		
-		if(featureManager.isActive(Features.TWEETS_WITH_IMAGES)) {
-			Optional.ofNullable(pendingTweet.getImages())
+		Optional.ofNullable(pendingTweet.getImages())
 			.ifPresent(images -> builder.images(images.stream()
 				.map(image -> PendingImageResponse.builder()
 						.id(image.id().id())
 						.url(image.url().url())
 						.build())
 				.collect(Collectors.toList())));	
-		}
 		
 		return builder.build();
 	}
