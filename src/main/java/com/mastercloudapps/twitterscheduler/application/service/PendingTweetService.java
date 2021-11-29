@@ -2,6 +2,7 @@ package com.mastercloudapps.twitterscheduler.application.service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,8 @@ import com.mastercloudapps.twitterscheduler.application.usecase.FindAllPendingTw
 import com.mastercloudapps.twitterscheduler.application.usecase.FindOnePendingTweetUseCase;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweet;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetId;
+import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetImage;
+import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetImageId;
 import com.mastercloudapps.twitterscheduler.domain.pending.PendingTweetPort;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
@@ -32,14 +35,21 @@ public class PendingTweetService implements CreatePendingTweetUseCase, DeletePen
 	@Override
 	public PendingTweet create(CreatePendingTweetOperation request) {
 		
-		PendingTweet pendingTweet = PendingTweet.builder()
+		final var builder = PendingTweet.builder()
 				.id(PendingTweetId.defaultValue())
 				.message(request.getMessage())
 				.publicationDate(request.getPublicationDate().instant())
-				.createdAt(NullableInstant.now().instant())
-				.build();
+				.createdAt(NullableInstant.now().instant());
 		
-		return pendingTweetPort.create(pendingTweet);
+		Optional.ofNullable(request.getImages())
+			.ifPresent(images -> builder.images(images.stream()
+					.map(image -> PendingTweetImage.builder()
+							.id(PendingTweetImageId.defaultValue())
+							.url(image)
+							.build())
+					.collect(Collectors.toList())));
+		
+		return pendingTweetPort.create(builder.build());
 	}
 
 	@Override

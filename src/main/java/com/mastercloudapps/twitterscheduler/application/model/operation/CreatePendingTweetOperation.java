@@ -1,5 +1,7 @@
 package com.mastercloudapps.twitterscheduler.application.model.operation;
 
+import java.util.List;
+
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
 
 import lombok.Builder;
@@ -21,5 +23,7 @@ public class CreatePendingTweetOperation implements Operation {
 
 	@NonNull
 	private final NullableInstant publicationDate;
+	
+	private final List<String> images;
 
 }
