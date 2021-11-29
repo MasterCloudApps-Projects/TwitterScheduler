@@ -1,6 +1,7 @@
 package com.mastercloudapps.twitterscheduler.domain.tweet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -252,5 +254,58 @@ class TweetTest {
 	      assertThat(tweet, is(not(other)));
 	      assertThat(tweet.hashCode(), is(not(other.hashCode())));
 	    }
+	  }
+	  
+	  @Nested
+	  @DisplayName("Test images list")
+	  class TestPlanAssociationsList {
+
+		  private Tweet tweet;
+
+		  private TweetImage image;
+
+		  @BeforeEach
+		  void setUp() {
+			  tweet = createTweet(MockData.VALID);
+			  image = TweetImage.builder()
+					  .id(1L)
+					  .size(300L)
+					  .type("image/jpeg")
+					  .width(100)
+					  .height(100)
+					  .build();
+		  }
+
+		  @Test
+		  @DisplayName("Add image, expect contained in images list.")
+		  void testAddImage() {
+			  tweet.addImages(image);
+			  assertThat(tweet.getImages().contains(image), is(true));
+		  }
+
+		  @Test
+		  @DisplayName("Add image list, expect contained in images list.")
+		  void testAddImagesList() {
+			  tweet.addImages(List.of(image));
+			  assertThat(tweet.getImages().contains(image), is(true));
+		  }
+
+		  @Test
+		  @DisplayName("Remove all images, expect images empty.")
+		  void testRemoveAllImages() {
+			  tweet.addImages(image);
+			  assertThat(tweet.getImages(), is(not(empty())));
+			  tweet.deleteImages();
+			  assertThat(tweet.getImages(), is(empty()));
+		  }
+
+		  @Test
+		  @DisplayName("Remove an image, expect not present in images list.")
+		  void testRemoveImage() {
+			  tweet.addImages(image);
+			  assertThat(tweet.getImages(), is(not(empty())));
+			  tweet.deleteImages(image);
+			  assertThat(tweet.getImages().contains(image), is(false));
+		  }
 	  }
 }
