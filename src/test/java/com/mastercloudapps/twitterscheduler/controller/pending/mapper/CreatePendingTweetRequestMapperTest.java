@@ -113,7 +113,7 @@ class CreatePendingTweetRequestMapperTest {
 		@Test
 		void mapAllAttributesIsOk() {
 
-			when(featureManager.isActive(Features.TWEETS_WITH_IMAGES)).thenReturn(false);
+			when(featureManager.isActive(Features.TWEETS_WITH_IMAGES)).thenReturn(true);
 			
 			PendingTweetRequest request = buildRequest(MockData.VALID_REQUEST);
 			final var createPendingTweetOperation = mapper.mapRequest(request);

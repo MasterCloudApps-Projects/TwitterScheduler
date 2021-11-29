@@ -39,7 +39,7 @@ public class PendingTweetResponseMapperTest {
 		@Test
 		void mapAllAttributesIsOk() {
 
-			when(featureManager.isActive(Features.TWEETS_WITH_IMAGES)).thenReturn(false);
+			when(featureManager.isActive(Features.TWEETS_WITH_IMAGES)).thenReturn(true);
 			
 			final var pendingTweet = PendingTweetData.MERRY_CHRISTMAS.create();
 			final var response = mapper.mapResponse(pendingTweet);
