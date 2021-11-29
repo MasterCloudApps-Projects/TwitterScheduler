@@ -3,8 +3,14 @@ package com.mastercloudapps.twitterscheduler.domain.pending;
 import static java.util.Objects.requireNonNull;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-import com.mastercloudapps.twitterscheduler.controller.exception.ExpiredPublicationDateException;
 import com.mastercloudapps.twitterscheduler.domain.shared.AggregateRoot;
 import com.mastercloudapps.twitterscheduler.domain.shared.Message;
 import com.mastercloudapps.twitterscheduler.domain.shared.NullableInstant;
@@ -16,14 +22,17 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 	private Message message;
 
 	private NullableInstant publicationDate;
-	
+
 	private NullableInstant createdAt;
+
+	private final List<PendingTweetImage> images;
 
 	private PendingTweet(final Builder builder) {
 		super(builder.pendingTweetId);
 		this.message = builder.message;
 		this.publicationDate = builder.publicationDate;
 		this.createdAt = builder.createdAt;
+		this.images = builder.images;
 	}
 
 	public Message message() {
@@ -35,9 +44,9 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 
 		return publicationDate;
 	}
-	
+
 	public NullableInstant createdAt() {
-		
+
 		return createdAt;
 	}
 
@@ -60,15 +69,41 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 
 		CreatedAtStep publicationDate(final Instant instant);
 	}
-	
+
 	public interface CreatedAtStep {
-		
+
 		Build createdAt(final Instant instant);
 	}
 
 	public interface Build {
+		
+		Build images(List<PendingTweetImage> images);
 
 		PendingTweet build();
+	}
+
+	public void addImages(PendingTweetImage... images) {
+		this.images.addAll(Arrays.stream(images).filter(Objects::nonNull).collect(Collectors.toSet()));
+	}
+
+	public void addImages(Collection<PendingTweetImage> images) {
+		this.images.addAll(images.stream().filter(Objects::nonNull).collect(Collectors.toSet()));
+	}
+
+	public void deleteImages(PendingTweetImage... images) {
+		this.images.removeAll(Arrays.stream(images).filter(Objects::nonNull).collect(Collectors.toSet()));
+	}
+
+	public void deleteImages(Collection<PendingTweetImage> images) {
+		this.images.removeAll(images.stream().filter(Objects::nonNull).collect(Collectors.toSet()));
+	}
+
+	public void deleteImages() {
+		this.images.clear();
+	}
+
+	public List<PendingTweetImage> getImages() {
+		return Collections.unmodifiableList(images);
 	}
 
 	public static class Builder implements IdStep, MessageStep, PublicationDateStep,
@@ -79,8 +114,10 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 		private Message message;
 
 		private NullableInstant publicationDate;
-		
+
 		private NullableInstant createdAt;
+		
+		private List<PendingTweetImage> images = new ArrayList<>();
 
 		@Override
 		public MessageStep id(Long pendingTweetId) {
@@ -109,11 +146,17 @@ public class PendingTweet extends AggregateRoot<PendingTweetId> {
 			this.createdAt = niCreatedAt;
 			return this;
 		}
-		
+
 		@Override
 		public PendingTweet build() {
 			return new PendingTweet(this);
 		}
+
+		@Override
+		public Build images(List<PendingTweetImage> images) {
+			this.images = Objects.requireNonNull(images);
+			return this;
+		}
 	}
-	
+
 }
