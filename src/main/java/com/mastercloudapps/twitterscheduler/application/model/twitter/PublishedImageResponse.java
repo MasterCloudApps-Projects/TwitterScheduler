@@ -1,8 +1,5 @@
 package com.mastercloudapps.twitterscheduler.application.model.twitter;
 
-import java.time.Instant;
-import java.util.List;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,15 +9,15 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class PublishTweetResponse {
+public class PublishedImageResponse {
 
 	private Long id;
-	
-	private String message;
-	
-	private String url;
-	
-	private Instant publishedAt;
-	
-	private List<PublishedImageResponse> images;
+
+	private Long size;
+
+	private String type;
+
+	private Integer width;
+
+	private Integer height;
 }
