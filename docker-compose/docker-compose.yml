@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  
+  db-postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=pass
+    ports:
+      - "5432:5432"
+    hostname: db-postgres
+    container_name: db-postgres
+    stdin_open: true
+    tty: true
+    restart: always
+
+  twitter-scheduler:
+    image: drojo/twitter-scheduler-tfm:0.0.1-SNAPSHOT
+    environment:
+      - PORT=8080
+      - SPRING_PROFILES_ACTIVE=pro
+      - API_USERNAME=admin
+      - API_PASSWORD=admin1
+      - DB_URL=postgresql://db-postgres:5432/postgres?user=postgres&password=pass
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=pass
+      - TWITTER_CONSUMER_KEY=<your-twitter-consumer-key>
+      - TWITTER_CONSUMER_SECRET=<your-twitter-consumer-secret>
+      - TWITTER_ACCESS_TOKEN=<your-twitter-access-token>
+      - TWITTER_ACCESS_TOKEN_SECRET=<your-twitter-access-token-secret>
+    ports:
+      - 8080:8080
+    hostname: twitter-scheduler
+    container_name: twitter-scheduler
+    depends_on:
+      - db-postgres
