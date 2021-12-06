@@ -32,5 +32,6 @@ services:
       - 8080:8080
     hostname: twitter-scheduler
     container_name: twitter-scheduler
+    restart: on-failure
     depends_on:
       - db-postgres
