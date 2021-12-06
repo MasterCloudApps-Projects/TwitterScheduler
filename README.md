@@ -20,6 +20,7 @@ Sections:
 - Features:
   - [Publish on demand](docs/technical-documentation/features/feature-publish-on-demand.md)
   - [Tweets with images](docs/technical-documentation/features/feature-tweets-with-images.md)
+- [Running TwitterScheduler locally](docs/technical-documentation/running-twitter-scheduler-locally.md)
 
 Following additional resources are available:
 

@@ -1,0 +1,1 @@
+In order to run provided `docker-compose.yml` file, please check [Running TwitterScheduler locally](../docs/technical-documentation/running-twitter-scheduler-locally.md)
