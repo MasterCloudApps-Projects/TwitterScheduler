@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import com.mastercloudapps.twitterscheduler.infrastructure.jpa.tweet.TweetJpaMapper;
 import com.mastercloudapps.twitterscheduler.mocks.TweetData;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

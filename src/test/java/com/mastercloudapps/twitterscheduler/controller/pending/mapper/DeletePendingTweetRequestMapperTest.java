@@ -13,7 +13,6 @@ import org.junit.jupiter.api.TestInstance;
 
 import com.mastercloudapps.twitterscheduler.application.model.operation.DeletePendingTweetOperation;
 import com.mastercloudapps.twitterscheduler.controller.exception.InvalidInputException;
-import com.mastercloudapps.twitterscheduler.controller.pending.mapper.FindOnePendingTweetRequestMapperTest.MockData;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DeletePendingTweetRequestMapperTest {
