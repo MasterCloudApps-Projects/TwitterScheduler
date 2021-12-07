@@ -34,7 +34,7 @@ Example of pending tweet creation request with images:
 
 ```
 {
-  "message": "This is a test tweet 14:07 28/11",
+  "message": "This is a test tweet with attached images",
   "publicationDate": "2022-04-01T10:00:00Z",
   "images": [
     {
