@@ -29,7 +29,7 @@ services:
       - TWITTER_ACCESS_TOKEN=<your-twitter-access-token>
       - TWITTER_ACCESS_TOKEN_SECRET=<your-twitter-access-token-secret>
     ports:
-      - 8080:8080
+      - "8080:8080"
     hostname: twitter-scheduler
     container_name: twitter-scheduler
     restart: on-failure
