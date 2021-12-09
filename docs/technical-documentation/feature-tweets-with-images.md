@@ -17,11 +17,11 @@ Is needed to provide the url where the image is available
 
 In order to complete this feature, is needed to modify the **domain** of the application, adding two new entities to Pending Tweet and Tweet agreggate roots:
 
-![domain-tweet-images](../../images/feature-tweet-images/domain-tweet-images.png)
+![domain-tweet-images](../technical-documentation/images/feature-tweet-images/domain-tweet-images.png)
 
 This also changes the **database** adding two new tables: PENDING_IMAGE and TWEET_IMAGE, both with a foreign key related to PENDING_TWEET and TWEET respectively:
 
-![db-tweet-images](../../images/feature-tweet-images/db-tweet-images.png)
+![db-tweet-images](../technical-documentation/images/feature-tweet-images/db-tweet-images.png)
 
 Control of the feature toggle is done in following parts:
 
@@ -73,7 +73,7 @@ On `Features.java` add new feature toggle:
 
 It is disabled by default
 
-![tweet-images-disabled](../../images/feature-tweet-images/tweet-images-togglz-disabled.png)
+![tweet-images-disabled](../technical-documentation/images/feature-tweet-images/tweet-images-togglz-disabled.png)
 
 ### Add new database tables and refactor mappers
 
@@ -134,7 +134,7 @@ On `Features.java` enable TWEETS_WITH_IMAGE feature toggle:
 	TWEETS_WITH_IMAGES
 ```
 
-![tweet-images-enabled](../../images/feature-tweet-images/tweet-images-togglz-enabled.png)
+![tweet-images-enabled](../technical-documentation/images/feature-tweet-images/tweet-images-togglz-enabled.png)
 
 ### Delete feature toggle
 
@@ -144,4 +144,4 @@ On `Features.java` enable TWEETS_WITH_IMAGE feature toggle:
 
 As it can be seen below, two commits failed when GitHub actions workflow was executed, so the application was not deployed in Heroku. Specifically, I forgot to add flywway script and I named flyway script wrong:
 
-![tweet-images-commits](../../images/feature-tweet-images/commits-tweet-images.png)
+![tweet-images-commits](../technical-documentation/images/feature-tweet-images/commits-tweet-images.png)

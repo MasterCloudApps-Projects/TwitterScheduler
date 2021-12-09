@@ -18,8 +18,8 @@ Sections:
 - [Continuous integration/Continuous Deployment](docs/technical-documentation/ci-cd.md)
 - [Initial implementation](docs/technical-documentation/initial-implementation.md)
 - Features:
-  - [Publish on demand](docs/technical-documentation/features/feature-publish-on-demand.md)
-  - [Tweets with images](docs/technical-documentation/features/feature-tweets-with-images.md)
+  - [Publish on demand](docs/technical-documentation/feature-publish-on-demand.md)
+  - [Tweets with images](docs/technical-documentation/feature-tweets-with-images.md)
 - [Running TwitterScheduler locally](docs/technical-documentation/running-twitter-scheduler-locally.md)
 
 Following additional resources are available:
@@ -31,5 +31,5 @@ Following additional resources are available:
 
 Twitter: [@davidrojoa](https://twitter.com/davidrojoa)
 
-[TwitterScheduler Logo]: docs/images/twitter-scheduler-logo.png
-[TwitterScheduler App]: docs/images/twitter-scheduler-pro.png
+[TwitterScheduler Logo]: docs/technical-documentation/images/twitter-scheduler-logo.png
+[TwitterScheduler App]: docs/technical-documentation/images/twitter-scheduler-pro.png

@@ -20,17 +20,19 @@ The scheduler can be disabled in `/togglz` application path (credentials needed)
 
 ## Domain
 
-![initial-domain](../images/initial-implementation/domain-initial.png)
+![initial-domain](../technical-documentation/images/initial-implementation/domain-initial.png)
 
 ## Database
 
-![initial-database](../images/initial-implementation/db-initial.png)
+Implemented with Spring Data JPA
+
+![initial-database](../technical-documentation/images/initial-implementation/db-initial.png)
 
 ## REST API
 
 [OpenAPI specification](https://swagger.io/specification/) has been used to document provided REST API:
 
-![openapi](../images/initial-implementation/openapi.png)
+![openapi](../technical-documentation/images/initial-implementation/openapi.png)
 
 Example of pending tweet creation request:
 

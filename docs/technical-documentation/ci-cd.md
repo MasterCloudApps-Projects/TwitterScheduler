@@ -2,7 +2,7 @@
 
 Current repository has activated GitHub actions: 
 
-![ci-cd](../images/ci-cd/twitter-scheduler-ci-cd.png)
+![ci-cd](../technical-documentation/images/ci-cd/twitter-scheduler-ci-cd.png)
 
 On every push to the repository `main` branch, the workflow is executed and the application is deployed in Heroku.
 
@@ -24,7 +24,7 @@ Following secrets are needed to be created in order that workflow could be succe
 
 [push-main.yml](../../.github/workflows/push-main.yml) workflow is executed in every push on `main` branchwith these steps:
 
-![workflow](../images/ci-cd/github-actions-workflow.png)
+![workflow](../technical-documentation/images/ci-cd/github-actions-workflow.png)
 
 1. **Run tests and build app**: execute unitary and integration tests, if they are successfull, then the application is built and uploaded for following steps.
 2. **Publish and deploy in Heroku**: download the built application, build the Heroku container and deploy it in Heroku

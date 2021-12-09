@@ -15,7 +15,7 @@ Is requested to provide a way to publish immediatly created Pending Tweets on de
 
 In order to complete this feature, is needed to modify the **domain** of the application, adding new value object to Tweet aggregate root:
 
-![domain-on-demand](../../images/feature-on-demand/domain-publish-on-demand.png)
+![domain-on-demand](../technical-documentation/images/feature-on-demand/domain-publish-on-demand.png)
 
 This new attribute can have two different values:
 
@@ -24,11 +24,11 @@ This new attribute can have two different values:
 
 This also changes the **database** adding a new column to TWEET table:
 
-![db-on-demand](../../images/feature-on-demand/db-publish-on-demand.png)
+![db-on-demand](../technical-documentation/images/feature-on-demand/db-publish-on-demand.png)
 
 To be able to publish on demand a pending tweet, a new endpoint is added to REST API:
 
-![on-demand-rest-method](../../images/feature-on-demand/publish-on-demand-rest-method.png)
+![on-demand-rest-method](../technical-documentation/images/feature-on-demand/publish-on-demand-rest-method.png)
 
 ## Implementation steps
 
@@ -57,7 +57,7 @@ On `Features.java` add new feature toggle:
 
 It is disabled by default
 
-![on-demand-disabled](../../images/feature-on-demand/publish-on-demand-togglz-disabled.png)
+![on-demand-disabled](../technical-documentation/images/feature-on-demand/publish-on-demand-togglz-disabled.png)
 
 ### Add V2 flyway script
 
@@ -88,7 +88,7 @@ As it is described [here](https://www.baeldung.com/spring-swagger-hiding-endpoin
 
 But method is reachable as it is shown:
 
-![on-demand-disabled](../../images/feature-on-demand/publish-on-demand-controller-toggle-disabled.png)
+![on-demand-disabled](../technical-documentation/images/feature-on-demand/publish-on-demand-controller-toggle-disabled.png)
 
 Tests added:
 
@@ -275,7 +275,7 @@ In Features enum, include @EnabledByDefault annotation for PUBLISH_ON_DEMAND fea
 	PUBLISH_ON_DEMAND
 ```
 
-![on-demand-enabled](../../images/feature-on-demand/publish-on-demand-togglz-enabled.png)
+![on-demand-enabled](../technical-documentation/images/feature-on-demand/publish-on-demand-togglz-enabled.png)
 
 Delete IT that check that publishOnDemand return 405 httpCode
 
@@ -312,4 +312,4 @@ Tests:
 
 As it is shown, per each commit in `main` branch, a new deployment in heroku has been done:
 
-![on-demand-commits](../../images/feature-on-demand/github-commits-heroku-deployments-on-demand.png)
+![on-demand-commits](../technical-documentation/images/feature-on-demand/github-commits-heroku-deployments-on-demand.png)
