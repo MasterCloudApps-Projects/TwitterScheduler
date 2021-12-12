@@ -24,8 +24,8 @@ Sections:
 
 Following additional resources are available:
 
-* 📖 Essay (Spanish)
-* 🖼 Slides (Spanish)
+* 📖 [Essay (Spanish)](docs/essay/memoria-twitter-scheduler.pdf)
+* 🖼 [Slides (Spanish)](docs/slides/presentacion-twitter-scheduler.pdf)
 
 ## Contact
 
